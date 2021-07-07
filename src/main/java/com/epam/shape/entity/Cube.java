@@ -1,55 +1,53 @@
 package com.epam.shape.entity;
 
-import com.epam.shape.service.IdGenerator;
+import com.epam.shape.exception.ShapeException;
+import com.epam.shape.service.CubeService;
 
-public class Cube {
-    private final long id;
-    private Point center;
-    private float edgeLength;
+public class Cube extends Shape {
+    private final Point center;
+    private final double edgeLength;
 
-    public Cube(Point center,float edgeLength){
-        this.id = IdGenerator.getId();
+    public Cube(Point center, double edgeLength) throws ShapeException {
+        super(CubeService.getPoints(center, edgeLength));
         this.center = center;
         this.edgeLength = edgeLength;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public Point getCenter() {
         return new Point(center);
     }
 
-    public void setCenter(Point center) {
-        this.center = new Point(center);
-    }
-
-    public float getEdgeLength() {
+    public double getEdgeLength() {
         return edgeLength;
-    }
-
-    public void setEdgeLength(float edgeLength) {
-        this.edgeLength = edgeLength;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Cube)) return false;
+        if (!super.equals(o)) return false;
 
         Cube cube = (Cube) o;
 
-        if (id != cube.id) return false;
-        if (Float.compare(cube.edgeLength, edgeLength) != 0) return false;
+        if (Double.compare(cube.edgeLength, edgeLength) != 0) return false;
         return center.equals(cube.center);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = super.hashCode();
+        long temp;
         result = 31 * result + center.hashCode();
-        result = 31 * result + (edgeLength != +0.0f ? Float.floatToIntBits(edgeLength) : 0);
+        temp = Double.doubleToLongBits(edgeLength);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Cube{" +
+                ", center=" + center +
+                ", edgeLength=" + edgeLength +
+                '}';
     }
 }

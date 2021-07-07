@@ -1,6 +1,6 @@
 package com.epam.shape.exception;
 
-public class CubeException extends Exception{
+public class CubeException extends ShapeException{
     public CubeException() {
     }
 

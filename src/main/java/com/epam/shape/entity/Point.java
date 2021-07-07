@@ -1,11 +1,11 @@
 package com.epam.shape.entity;
 
 public class Point {
-    private float x;
-    private float y;
-    private float z;
+    private double x;
+    private double y;
+    private double z;
 
-    public Point(float x, float y, float z) {
+    public Point(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -23,47 +23,73 @@ public class Point {
         this.z = 0F;
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public float getZ() {
+    public double getZ() {
         return z;
     }
 
-    public void setZ(float z) {
+    public void setZ(double z) {
         this.z = z;
+    }
+
+    public boolean greaterThen(Point point, Planes byPlane){
+        if(byPlane == null) return false;
+        switch (byPlane){
+            case X:
+                if(x > point.getX()){
+                    return true;
+                }
+                break;
+            case Y:
+                if(y > point.getY()){
+                    return true;
+                }
+                break;
+            case Z:
+                if(z > point.getZ()) {
+                    return true;
+                }
+        }
+        return false;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Point)) return false;
 
         Point point = (Point) o;
 
-        if (Float.compare(point.x, x) != 0) return false;
-        if (Float.compare(point.y, y) != 0) return false;
-        return Float.compare(point.z, z) == 0;
+        if (Double.compare(point.x, x) != 0) return false;
+        if (Double.compare(point.y, y) != 0) return false;
+        return Double.compare(point.z, z) == 0;
     }
 
     @Override
     public int hashCode() {
-        int result = (x != +0.0f ? Float.floatToIntBits(x) : 0);
-        result = 31 * result + (y != +0.0f ? Float.floatToIntBits(y) : 0);
-        result = 31 * result + (z != +0.0f ? Float.floatToIntBits(z) : 0);
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(x);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(y);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
