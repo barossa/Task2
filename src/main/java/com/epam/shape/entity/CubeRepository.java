@@ -1,8 +1,12 @@
 package com.epam.shape.entity;
 
+import com.epam.shape.specification.Specification;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CubeRepository {
     private static CubeRepository instance;
@@ -40,6 +44,14 @@ public class CubeRepository {
 
     public int size(){
         return cubes.size();
+    }
+
+    public void sort(Comparator<Cube> comparator){
+        cubes.sort(comparator);
+    }
+
+    public List<Cube> findBySpecification(Specification specification){
+        return cubes.stream().filter(specification::specify).collect(Collectors.toList());
     }
 
 }
