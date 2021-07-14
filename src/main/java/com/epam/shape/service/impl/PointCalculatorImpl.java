@@ -3,7 +3,7 @@ package com.epam.shape.service.impl;
 import com.epam.shape.entity.Point;
 import com.epam.shape.service.PointCalcService;
 
-public class PointCalculator implements PointCalcService {
+public class PointCalculatorImpl implements PointCalcService {
     @Override
     public double calcDistance(Point first, Point second) {
         if(first == second || first.equals(second)) return 0D;

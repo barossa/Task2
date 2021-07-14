@@ -1,21 +1,19 @@
 package com.epam.shape.service.impl;
 
 import com.epam.shape.entity.Point;
-import com.epam.shape.entity.Shape;
 import com.epam.shape.exception.ShapeException;
 import com.epam.shape.service.ShapeCalcService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShapeCalculator implements ShapeCalcService {
+public class ShapeCalculatorImpl implements ShapeCalcService {
 
     @Override
-    public double calcVolume(Shape shape) throws ShapeException {
-        if (shape == null || shape.getCoordinates().size() < 8) {
+    public double calcVolume(List<Point> coordinates) throws ShapeException {
+        if (coordinates == null || coordinates.size() < 8) {
             throw new ShapeException("Shape is incorrect!");
         }
-        List<Point> coordinates = shape.getCoordinates();
         List<Point> firstBase = new ArrayList<>(4), secondBase = new ArrayList<>(4);
         Point firstPoint = coordinates.get(0);
         for (Point point : coordinates) {
