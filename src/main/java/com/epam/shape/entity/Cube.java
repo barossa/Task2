@@ -1,18 +1,25 @@
 package com.epam.shape.entity;
 
-import com.epam.shape.exception.ShapeException;
-import com.epam.shape.service.CubeService;
+import com.epam.shape.observer.CubeEvent;
+import com.epam.shape.observer.CubeObservable;
+import com.epam.shape.observer.CubeObserver;
 import com.epam.shape.service.IdGenerator;
 
-public class Cube {
-    private final long id;
-    private final Point center;
-    private final double edgeLength;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Cube(Point center, double edgeLength){
+public class Cube implements CubeObservable {
+    private final long id;
+    private Point center;
+    private double edgeLength;
+
+    private final List<CubeObserver> observerList;
+
+    public Cube(Point center, double edgeLength) {
         this.id = IdGenerator.getId();
         this.center = center;
         this.edgeLength = edgeLength;
+        this.observerList = new ArrayList<>();
     }
 
     public long getId() {
@@ -25,6 +32,30 @@ public class Cube {
 
     public double getEdgeLength() {
         return edgeLength;
+    }
+
+    public void setCenter(Point center) {
+        this.center = center;
+    }
+
+    public void setEdgeLength(double edgeLength) {
+        this.edgeLength = edgeLength;
+    }
+
+    @Override
+    public void attach(CubeObserver observer) {
+        observerList.add(observer);
+    }
+
+    @Override
+    public void detach(CubeObserver observer) {
+        observerList.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        CubeEvent event = new CubeEvent(this);
+        observerList.forEach(observer -> observer.updateParameters(event));
     }
 
     @Override

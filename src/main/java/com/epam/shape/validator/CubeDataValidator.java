@@ -1,5 +1,5 @@
 package com.epam.shape.validator;
 
-public interface ShapeValidator {
+public interface CubeDataValidator {
     boolean validateData(String data);
 }
