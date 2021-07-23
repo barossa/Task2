@@ -39,4 +39,12 @@ public class CubeParameter {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "CubeParameter{" +
+                "coordinates=" + coordinates +
+                ", volume=" + volume +
+                '}';
+    }
 }

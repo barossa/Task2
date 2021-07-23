@@ -18,7 +18,7 @@ public class CubeDataValidatorImpl implements CubeDataValidator {
     @Override
     public boolean validateData(String data) {
         if (pattern.matcher(data).matches()) {
-            logger.info("Validated correct [Cube] string -> \"" + data + "\"");
+            logger.debug("Validated correct [Cube] string -> \"" + data + "\"");
             return true;
         } else {
             logger.debug("String is incorrect -> \"" + data + "\"");

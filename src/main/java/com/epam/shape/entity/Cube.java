@@ -3,12 +3,16 @@ package com.epam.shape.entity;
 import com.epam.shape.observer.CubeEvent;
 import com.epam.shape.observer.CubeObservable;
 import com.epam.shape.observer.CubeObserver;
+import com.epam.shape.parser.CubeParser;
 import com.epam.shape.service.IdGenerator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cube implements CubeObservable {
+    final static Logger logger = LogManager.getLogger(Cube.class);
     private final long id;
     private Point center;
     private double edgeLength;
@@ -35,11 +39,21 @@ public class Cube implements CubeObservable {
     }
 
     public void setCenter(Point center) {
+        if(center == null) {
+            logger.error("Cube[" + id + "] center can't be null!");
+            return;
+        }
         this.center = center;
+        notifyObservers();
     }
 
     public void setEdgeLength(double edgeLength) {
+        if(edgeLength <= 0){
+            logger.error("Cube[" + id + "] edge can't be negative(<=0) !");
+            return;
+        }
         this.edgeLength = edgeLength;
+        notifyObservers();
     }
 
     @Override

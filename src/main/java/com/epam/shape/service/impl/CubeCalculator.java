@@ -5,22 +5,22 @@ import com.epam.shape.exception.CubeException;
 import com.epam.shape.service.CubeCalcService;
 
 public class CubeCalculator implements CubeCalcService {
-    private final Cube cube;
+    private final double edge;
 
     public CubeCalculator(Cube cube) throws CubeException {
         if(cube == null) {
             throw new CubeException("Cube can't be null");
         }
-        this.cube = cube;
+        this.edge = cube.getEdgeLength();
     }
 
     @Override
     public double calcSurfaceSquare() {
-        return 0;
+        return 6 * edge * edge;
     }
 
     @Override
     public double calcVolume() {
-        return 0;
+        return edge * edge * edge;
     }
 }

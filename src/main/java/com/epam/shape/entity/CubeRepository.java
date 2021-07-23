@@ -2,10 +2,7 @@ package com.epam.shape.entity;
 
 import com.epam.shape.specification.Specification;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CubeRepository {
@@ -24,6 +21,19 @@ public class CubeRepository {
 
     public void add(Cube cube){
         cubes.add(cube);
+    }
+
+    public Optional<Cube> get(long cubeId){
+        for (Cube cube : cubes) {
+            if(cube.getId() == cubeId) {
+                return Optional.of(cube);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public List<Cube> getAsList(){
+        return new ArrayList<>(cubes);
     }
 
     public void addAll(Collection<? extends Cube> cubes){
@@ -54,4 +64,25 @@ public class CubeRepository {
         return cubes.stream().filter(specification::specify).collect(Collectors.toList());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CubeRepository that = (CubeRepository) o;
+
+        return cubes.equals(that.cubes);
+    }
+
+    @Override
+    public int hashCode() {
+        return cubes.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "CubeRepository{" +
+                "cubes=" + cubes +
+                '}';
+    }
 }
